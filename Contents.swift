@@ -8,31 +8,38 @@ class ChaosView: UIView {
         let c = CGPoint(x: rect.width, y: 0)
         let points = [a, b, c]
         
-        UIColor.green.setFill()
+        UIColor.white.setFill()
         
         for point in points {
-            UIBezierPath(ovalIn: CGRect(origin: CGPoint(x: point.x - 0.5, y: point.y - 0.5), size: CGSize(width: 1, height: 1))).fill()
+            UIBezierPath(ovalIn: CGRect(origin: CGPoint(x: point.x - 5, y: point.y - 5), size: CGSize(width: 10, height: 10))).fill()
         }
         
-        let next = CGPoint(x: Int.random(in: 0...Int(rect.width)), y: Int.random(in: 0...Int(rect.height)))
+        var next = CGPoint(x: Int.random(in: 0...Int(rect.width)), y: Int.random(in: 0...Int(rect.height)))
         
-        UIBezierPath(ovalIn: CGRect(origin: CGPoint(x: next.x - 0.5, y: next.y - 0.5), size: CGSize(width: 1, height: 1))).fill()
+        UIBezierPath(ovalIn: CGRect(origin: CGPoint(x: next.x - 5, y: next.y - 5), size: CGSize(width: 10, height: 10))).fill()
 
-        while true {
-            let number = Int.random(in: 0..<points.count)
+        for _ in 0..<100_000 {
+            let number = Int.random(in: 0..<3)
             if number == 0 {
-                let rect1 = CGRect(origin: CGPoint(x: abs(a.x - next.x) / 2, y: abs(a.y - next.y) / 2), size: CGSize(width: 1, height: 1))
-                
-                UIBezierPath(ovalIn: rect1).fill()
+                UIColor.red.setFill()
+                let point = CGPoint(x: (a.x + next.x) / 2, y: (a.y + next.y) / 2)
+                let rectP = CGRect(origin: point, size: CGSize(width: 1, height: 1))
+                UIBezierPath(ovalIn: rectP).fill()
+                next = point
             } else if number == 1 {
-                let rect2 = CGRect(origin: CGPoint(x: abs(b.x - next.x) / 2, y: abs(b.y - next.y) / 2), size: CGSize(width: 1, height: 1))
-                
-                UIBezierPath(ovalIn: rect2).fill()
+                UIColor.green.setFill()
+                let point = CGPoint(x: (b.x + next.x) / 2, y: (b.y + next.y) / 2)
+                let rectP = CGRect(origin: point, size: CGSize(width: 1, height: 1))
+                UIBezierPath(ovalIn: rectP).fill()
+                next = point
             } else if number == 2 {
-                let rect3 = CGRect(origin: CGPoint(x: abs(c.x - next.x) / 2, y: abs(c.y - next.y) / 2), size: CGSize(width: 1, height: 1))
-                
-                UIBezierPath(ovalIn: rect3).fill()
+                UIColor.blue.setFill()
+                let point = CGPoint(x: (c.x + next.x) / 2, y: (c.y + next.y) / 2)
+                let rectP = CGRect(origin: point, size: CGSize(width: 1, height: 1))
+                UIBezierPath(ovalIn: rectP).fill()
+                next = point
             }
+            
         }
 
     }
